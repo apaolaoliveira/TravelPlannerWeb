@@ -8,6 +8,7 @@ export function Activities(){
           <span className="text-xl font-semibold text-zinc-300">17th</span>
           <span className="text-xs text-zinc-500">Saturday</span>
         </div>
+        
         <p className="text-sm text-zinc-500">No record activities for this date</p>
       </div>
 

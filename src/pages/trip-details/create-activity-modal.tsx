@@ -1,4 +1,5 @@
 import { X, Tag, Calendar } from "lucide-react";
+import { Button } from "../../components/button";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -17,6 +18,7 @@ export function CreateActivityModal({
               <X className="size-5 text-zinc-400"/>
             </button>
           </div>
+          
           <p className="text-sm text-zinc-400 text-left">
             All the guests can visualize this activity
           </p>
@@ -32,6 +34,7 @@ export function CreateActivityModal({
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
             />
           </div>
+
           <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
               <Calendar className="text-zinc-400 size-5"/>
               <input 
@@ -41,9 +44,10 @@ export function CreateActivityModal({
                 className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
               />
           </div>
-          <button type="submit" className="w-full justify-center bg-lime-300 text-lime-950 rounded-lg px-5 h-11 font-medium flex items-center gap-2 hover:bg-lime-400">
+
+          <Button variant="primary" size="full">
             Save activity
-          </button>
+          </Button>
         </form>
       </div>
     </div>
