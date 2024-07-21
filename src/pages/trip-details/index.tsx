@@ -1,4 +1,4 @@
-import { Calendar, CircleCheck, MapPin, Plus, Settings2 } from 'lucide-react';
+import { Calendar, CircleCheck, Link2, MapPin, Plus, Settings2 } from 'lucide-react';
 
 export function TripDetailsPage(){
   return (
@@ -12,7 +12,7 @@ export function TripDetailsPage(){
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
             <Calendar className="size-5 text-zinc-400" />
-            <span className="text-zinc-100">17 a 23 Agosto</span>
+            <span className="text-zinc-100">17th a 23th August</span>
           </div>
 
           <div className="w-px h-6 bg-zinc-800"/>
@@ -37,16 +37,16 @@ export function TripDetailsPage(){
           <section className="space-y-8">
             <div className="space-y-2.5">
               <div className="flex gap-2 items-baseline">
-                <span className="text-xl font-semibold text-zinc-300">Dia 17</span>
-                <span className="text-xs text-zinc-500">Sábado</span>
+                <span className="text-xl font-semibold text-zinc-300">17th</span>
+                <span className="text-xs text-zinc-500">Saturday</span>
               </div>
               <p className="text-sm text-zinc-500">No record activities for this date</p>
             </div>
 
             <div className="space-y-2.5">
               <div className="flex gap-2 items-baseline">
-                <span className="text-xl font-semibold text-zinc-300">Dia 18</span>
-                <span className="text-xs text-zinc-500">Domingo</span>
+                <span className="text-xl font-semibold text-zinc-300">18th</span>
+                <span className="text-xs text-zinc-500">Sunday</span>
               </div>
 
               <div className="space-y-2.5">
@@ -60,7 +60,25 @@ export function TripDetailsPage(){
           </section>
         </div>
 
-        <div className="w-80"></div>
+        <div className="w-80 space-y-6">
+          <section className="space-y-6">
+            <h2 className="font-semibold text-xl">Useful links</h2>
+            <div className="space-y-5">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-1.5">
+                  <span className="block font-medium text-zinc-100">AirBnB booking</span>
+                  <a href="#" className="block text-xs text-zinc-400 hover:text-zinc-200 truncate">https://www.airbnb.com.br/rooms/104700011</a>
+                </div>
+                <Link2 className="text-zinc-400 size-5 shrink-0" />
+              </div>
+            </div>
+            <button className="bg-zinc-800 w-full justify-center text-zinc-200 rounded-lg px-5 h-11 font-medium flex items-center gap-2 hover:bg-zinc-700">
+              <Plus className="size-5 text-zinc-400"/>
+              Add link
+            </button>
+          </section>
+          <div className="w-full h-px bg-zinc-800"></div>
+        </div>
       </main>
     </div>
   )
