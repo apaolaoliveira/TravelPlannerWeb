@@ -87,7 +87,7 @@ export function CreateTripPage() {
 
         <p className="text-sm text-zinc-500">
           By planning your trip with plann.er, you automatically agree <br />
-          to our <a href="#" className="text-zinc-300 underline">terms of use</a> 
+          to our <a href="#" className="text-zinc-300 underline">terms of use</a>&nbsp;
           and <a href="#" className="text-zinc-300 underline">privacy policies</a>. 
         </p>
 
