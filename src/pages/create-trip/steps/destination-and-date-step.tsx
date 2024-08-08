@@ -7,17 +7,22 @@ import { format } from "date-fns";
 
 interface DestinationAndDateStepProps {
   isGuestsInputOpen?: boolean;
+  eventStartAndEndDates: DateRange | undefined;
   openGuestsInput: () => void;
   closeGuestsInput: () => void;
+  setDestination: (destination: string) => void;
+  setEventStartAndEndDates: (dates: DateRange | undefined) => void;
 }
 
 export function DestinationAndDateStep({
   isGuestsInputOpen,
+  eventStartAndEndDates,
   openGuestsInput,
   closeGuestsInput,
+  setDestination,
+  setEventStartAndEndDates,
 }: DestinationAndDateStepProps){
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>();
 
   function toggleOpenDatePicker(){
     return setIsDatePickerOpen(!isDatePickerOpen);
@@ -30,7 +35,13 @@ export function DestinationAndDateStep({
     <div className="h-16 bg-zinc-900 px-4 rounded-xl flex items-center shadow-shape gap-3">
       <div className="flex items-center gap-2 flex-1">
         <MapPin className="size-5 text-zinc-400"/>
-        <input disabled={isGuestsInputOpen} type="text" placeholder="Where are you going?" className="bg-transparent text-lg placeholder-zinc-400 outline-none w-60"/>
+        <input 
+          disabled={isGuestsInputOpen} 
+          type="text" 
+          placeholder="Where are you going?" 
+          className="bg-transparent text-lg placeholder-zinc-400 outline-none w-60"
+          onChange={event => setDestination(event.target.value)}
+        />
       </div>
 
       <button disabled={isGuestsInputOpen} onClick={toggleOpenDatePicker} className="flex items-center flex-1 text-left gap-2">

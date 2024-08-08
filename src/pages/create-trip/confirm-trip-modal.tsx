@@ -6,11 +6,15 @@ import { Input } from '../../components/input';
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void;
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
+  setOwnerName: (ownerName: string) => void;
+  setOwnerEmail: (ownerEmail: string) => void;
 }
 
 export function ConfirmTripModal({ 
   closeConfirmTripModal, 
   createTrip,
+  setOwnerName,
+  setOwnerEmail,
 }: ConfirmTripModalProps){
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
@@ -30,11 +34,21 @@ export function ConfirmTripModal({
         </div>
 
         <form onSubmit={createTrip} className="space-y-3">
-          <Input placeholder="Full name" type="text" name="name">
+          <Input 
+            placeholder="Full name" 
+            type="text" 
+            name="name" 
+            onChange={event => setOwnerName(event.target.value)}
+          >
             <User className="text-zinc-400 size-5"/>
           </Input>
 
-          <Input placeholder="Personal Email" type="email" name="email">
+          <Input 
+            placeholder="Personal Email" 
+            type="email" 
+            name="email" 
+            onChange={event => setOwnerEmail(event.target.value)}
+          >
             <AtSign className="text-zinc-400 size-5"/>
           </Input>
           
