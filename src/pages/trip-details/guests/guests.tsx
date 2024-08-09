@@ -1,9 +1,11 @@
-import { CheckCircle2, CircleDashed, Plus } from "lucide-react";
+import { CheckCircle2, CircleDashed, Pencil, Plus, X } from "lucide-react";
 import { Button } from "../../../components/button";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { api } from "../../../lib/axios";
 import { InviteNewGuestModal } from "./invite-new-guest-modal";
+import { UpdateGuestModal } from "./update-guest-modal";
+import { DeleteGuestModal } from "./delete-guest-modal";
 
 interface Participant {
   id: string;
@@ -22,10 +24,37 @@ export function Guests(){
     .then(response => setParticipants(response.data.participants))
   }, [tripId]);
 
+  const [guestName, setGuestName] = useState('');
+  const [guestEmail, setGuestEmail] = useState('');
+
   const [isInviteGuestModalOpen, setIsInviteGuestModalOpen] = useState(false);
+  const [isUpdateGuestModalOpen, setIsUpdateGuestModalOpen] = useState(false);
+  const [isDeleteGuestModalOpen, setIsDeleteGuestModalOpen] = useState(false);
+
+  const [ selectedGuestId, setSelectedGuestId ] = useState<string | null>(null);
 
   function toggleInviteGuestModalOpen(){
     setIsInviteGuestModalOpen(!isInviteGuestModalOpen);
+  }
+
+  function openEditGuestModal(participantId: string) {
+    setSelectedGuestId(participantId);
+    setIsUpdateGuestModalOpen(true);
+  }
+
+  function closeEditGuestModal() {
+    setIsUpdateGuestModalOpen(false);
+    setSelectedGuestId(null);
+  }
+
+  function openDeleteGuestModal(participantId: string) {
+    setSelectedGuestId(participantId);
+    setIsDeleteGuestModalOpen(true);
+  }
+
+  function closeDeleteGuestModal() {
+    setIsDeleteGuestModalOpen(false);
+    setSelectedGuestId(null);
   }
   
   return (
@@ -47,7 +76,15 @@ export function Guests(){
                 </div>
                 <span className="block text-sm text-zinc-400 truncate">{participant.email}</span>
               </div>
-          </div>
+              <div className="flex items-center gap-2">
+                <button onClick={() => openEditGuestModal(participant.id)}>
+                  <Pencil className="text-zinc-400 hover:text-amber-400 size-3"/>
+                </button>
+                <button onClick={() => openDeleteGuestModal(participant.id)}>
+                  <X className="text-zinc-400 hover:text-red-400 size-4"/>
+                </button>
+              </div>
+            </div>
           )
         })}
       </div>
@@ -58,7 +95,31 @@ export function Guests(){
       </Button>
 
       {isInviteGuestModalOpen && (
-        <InviteNewGuestModal closeModal={toggleInviteGuestModalOpen} />
+        <InviteNewGuestModal 
+          setGuestName={setGuestName}
+          setGuestEmail={setGuestEmail}
+          guestName={guestName}
+          guestEmail={guestEmail}
+          closeModal={toggleInviteGuestModalOpen} 
+        />
+      )}
+
+      {isUpdateGuestModalOpen && (
+        <UpdateGuestModal
+          setGuestName={setGuestName}
+          setGuestEmail={setGuestEmail}
+          guestName={guestName}
+          guestEmail={guestEmail}
+          closeModal={closeEditGuestModal} 
+          participantId={selectedGuestId}
+        />
+      )}
+
+      {isDeleteGuestModalOpen && (
+        <DeleteGuestModal
+          closeModal={closeDeleteGuestModal} 
+          participantId={selectedGuestId}
+        />
       )}
     </section>
   )

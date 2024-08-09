@@ -7,12 +7,21 @@ import { guestService } from "./guestService";
 
 interface InviteNewGuestModalProps {
   closeModal: () => void;
+  setGuestName: (guestName: string) => void;
+  setGuestEmail: (guestEmail: string) => void;
+  guestName: string;
+  guestEmail: string;
 }
 
 export function InviteNewGuestModal({
-  closeModal
+  closeModal,
+  setGuestName,
+  setGuestEmail,
+  guestName,
+  guestEmail,
 }: InviteNewGuestModalProps){
   const { tripId } = useParams();
+  
 
   return (
     <Modal
@@ -21,12 +30,25 @@ export function InviteNewGuestModal({
         closeModal={closeModal}
         size="large"
       > 
-        <form onSubmit={(event) => guestService.inviteNewGuest(event, tripId)} className="space-y-3">
-          <Input type="text" name="name" placeholder="Guest's name" minLength={4} required>
+        <form onSubmit={(event) => guestService.inviteNewGuest(event, tripId, guestName, guestEmail)} className="space-y-3">
+          <Input 
+            type="text" 
+            name="name" 
+            placeholder="Guest's name" 
+            minLength={4} 
+            onChange={event => setGuestName(event.target.value)}
+            required
+          >
             <User className="text-zinc-400 size-5"/>
           </Input>
 
-          <Input type="email" name="email" placeholder="Guest's email" required>
+          <Input 
+            type="email" 
+            name="email" 
+            placeholder="Guest's email" 
+            onChange={event => setGuestEmail(event.target.value)}
+            required
+          >
             <AtSign className="text-zinc-400 size-5"/>
           </Input>
 

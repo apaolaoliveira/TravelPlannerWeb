@@ -49,7 +49,7 @@ export function ConfirmTripModal({
             type="email" 
             name="email" 
             onChange={event => setOwnerEmail(event.target.value)}
-            >
+          >
             <AtSign className="text-zinc-400 size-5"/>
           </Input>
           
