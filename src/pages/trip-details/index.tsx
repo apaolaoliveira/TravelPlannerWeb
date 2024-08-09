@@ -1,21 +1,17 @@
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { CreateActivityModal } from './modals/create-activity-modal';
-import { ImportantLinks } from './important-links';
-import { Guests } from './guests';
-import { Activities } from './activities';
-import { DestinationAndDateHeader } from './destination-and-date-header';
+import { CreateActivityModal } from './activities/create-activity-modal';
+import { Links } from './links/links';
+import { Guests } from './guests/guests';
+import { Activities } from './activities/activities';
+import { DestinationAndDateHeader } from './header/destination-and-date-header';
 import { Button } from '../../components/button';
 
 export function TripDetailsPage(){
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false);
 
-  function openCreateActivityModal(){
-    setIsCreateActivityModalOpen(true);
-  }
-
-  function closeCreateActivityModal(){
-    setIsCreateActivityModalOpen(false);
+  function toggleCreateActivityModal(){
+    setIsCreateActivityModalOpen(!isCreateActivityModalOpen);
   }
 
   return (
@@ -27,7 +23,7 @@ export function TripDetailsPage(){
           <div className="flex items-center justify-between">
             <h2 className='text-3xl font-semibold'>Activity</h2>
             
-            <Button variant="primary" onClick={openCreateActivityModal}>
+            <Button variant="primary" onClick={toggleCreateActivityModal}>
               <Plus className="size-5"/>
               New activity
             </Button>
@@ -37,14 +33,14 @@ export function TripDetailsPage(){
         </div>
 
         <div className="w-80 space-y-6">
-          <ImportantLinks />
+          <Links />
           <div className="w-full h-px bg-zinc-800"></div>
           <Guests />
         </div>
       </main>
 
       {isCreateActivityModalOpen && (
-        <CreateActivityModal closeCreateActivityModal={closeCreateActivityModal} /> 
+        <CreateActivityModal closeCreateActivityModal={toggleCreateActivityModal} /> 
       )}
     </div>
   )

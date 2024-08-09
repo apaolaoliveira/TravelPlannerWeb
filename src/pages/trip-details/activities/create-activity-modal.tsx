@@ -38,7 +38,7 @@ export function CreateActivityModal({
         size="large"
       > 
         <form onSubmit={createActivity} className="space-y-3">
-          <Input type="text" name="title" placeholder="Activity's title" required>
+          <Input type="text" name="title" placeholder="Activity's title" minLength={4} required>
             <Tag className="text-zinc-400 size-5"/>
           </Input>
 

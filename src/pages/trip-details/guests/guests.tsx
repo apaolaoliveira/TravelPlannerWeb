@@ -1,8 +1,8 @@
 import { CheckCircle2, CircleDashed, Plus } from "lucide-react";
-import { Button } from "../../components/button";
+import { Button } from "../../../components/button";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { api } from "../../lib/axios";
+import { api } from "../../../lib/axios";
 
 interface Participant {
   id: string;
@@ -33,7 +33,7 @@ export function Guests(){
                 <span className="block text-sm text-zinc-400 truncate">{participant.email}</span>
               </div>
               {participant.is_confirmed? (
-                <CheckCircle2 className="text-green-400 size-5 shrink-0" />
+                <CheckCircle2 className="text-lime-300 size-5 shrink-0" />
               ):(
                 <CircleDashed className="text-zinc-400 size-5 shrink-0" />
               )}

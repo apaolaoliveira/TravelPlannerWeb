@@ -1,8 +1,9 @@
-import { CircleCheck } from "lucide-react";
+import { ListCheck, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../../lib/axios";
+import { api } from "../../../lib/axios";
 import { format } from "date-fns";
+import { DeleteActivityModal } from "./delete-activity-modal";
 
 interface Activity {
   date: string;
@@ -21,6 +22,19 @@ export function Activities(){
     api.get(`/trips/${tripId}/activities`)
     .then(response => setActivities(response.data.activities))
   }, [tripId]);
+
+  const [isDeleteActivityModalOpen, setIsDeleteActivityModalOpen] = useState(false);
+  const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
+
+  function openDeleteActivityModal(activityId: string) {
+    setSelectedActivityId(activityId);
+    setIsDeleteActivityModalOpen(true);
+  }
+
+  function closeDeleteActivityModal() {
+    setIsDeleteActivityModalOpen(false);
+    setSelectedActivityId(null);
+  }
   
   return (
     <section className="space-y-8">
@@ -37,9 +51,12 @@ export function Activities(){
                     return (
                       <div key={activity.id} className="space-y-2.5">
                       <div className="px-4 py-2.5 bg-zinc-900 rounded shadow-shape flex items-center gap-3">
-                        <CircleCheck className="size-5 text-lime-300"/>
+                        <ListCheck className="size-5 text-lime-300"/>
                         <span className="text-zinc-100">{activity.title}</span>
                         <span className="text-zinc-400 text-sm ml-auto">{format(activity.occurs_at, "h:mm aaa")}</span>
+                        <button onClick={() => openDeleteActivityModal(activity.id)}>
+                          <X className="text-red-400 size-5"/>
+                        </button>
                       </div>
                     </div>
                     )
@@ -52,6 +69,10 @@ export function Activities(){
           </div>
         )
       })}
+
+      {isDeleteActivityModalOpen && (
+        <DeleteActivityModal activityId={selectedActivityId} closeDeleteActivityModal={closeDeleteActivityModal}/>
+      )}
     </section>
   )
 }
