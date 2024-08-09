@@ -24,9 +24,9 @@ export function Activities(){
   
   return (
     <section className="space-y-8">
-      {activities.map(category => {
+      {activities.map((category, index) => {
         return (
-          <div className="space-y-2.5">
+          <div key={index} className="space-y-2.5">
             <div className="flex gap-2 items-baseline">
               <span className="text-xl font-semibold text-zinc-300">{format(category.date, "LLL do")}</span>
               <span className="text-xs text-zinc-500">{format(category.date, "EEEE")}</span>

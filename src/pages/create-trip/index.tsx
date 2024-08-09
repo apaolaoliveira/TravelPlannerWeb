@@ -1,11 +1,12 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { InviteGuestsModal } from './invite-guests-modal';
-import { ConfirmTripModal } from './confirm-trip-modal';
+import { InviteGuestsModal } from './modals/invite-guests-modal';
+import { ConfirmTripModal } from './modals/confirm-trip-modal';
 import { DestinationAndDateStep } from './steps/destination-and-date-step';
 import { InviteGuestsStep } from './steps/invite-guests-step';
 import { DateRange } from 'react-day-picker';
 import { api } from '../../lib/axios';
+import { format } from 'date-fns';
 
 export function CreateTripPage() {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState('');
   const [ownerEmail, setOwnerEmail] = useState('');
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>();
+  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
+  ? format(eventStartAndEndDates.from, "LLL do").concat(' to ').concat(format(eventStartAndEndDates.to, "LLL do"))
+  : null;
 
   const [emailsToInvite, setEmailsToInvite] = useState([
     'apaolaoliveira@gmail.com',
@@ -66,7 +70,6 @@ export function CreateTripPage() {
 
   async function createTrip(event: FormEvent<HTMLFormElement>){
     event.preventDefault();
-    console.log('oi')
 
     if(!destination 
       ||!ownerName 
@@ -140,6 +143,8 @@ export function CreateTripPage() {
             createTrip={createTrip} 
             setOwnerName={setOwnerName}
             setOwnerEmail={setOwnerEmail}
+            destination={destination}
+            displayedDate={displayedDate}
           />
         )}
       </div>
