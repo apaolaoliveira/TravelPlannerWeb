@@ -22,9 +22,7 @@ export function CreateTripPage() {
   ? format(eventStartAndEndDates.from, "LLL do").concat(' to ').concat(format(eventStartAndEndDates.to, "LLL do"))
   : null;
 
-  const [emailsToInvite, setEmailsToInvite] = useState([
-    'apaolaoliveira@gmail.com',
-  ]);
+  const [emailsToInvite, setEmailsToInvite] = useState<string[] | undefined>([]);
 
   function openGuestsInput(){
     setIsGuestsInputOpen(true);
@@ -42,6 +40,14 @@ export function CreateTripPage() {
     setIsGuestsModalOpen(false);
   }
 
+  function openConfirmTripModal(){
+    setIsConfirmTripModalOpen(true);
+  }
+
+  function closeConfirmTripModal(){
+    setIsConfirmTripModalOpen(false);
+  }
+
   function addNewEmailToInvite(event: FormEvent<HTMLFormElement>){
     event.preventDefault();
 
@@ -49,6 +55,12 @@ export function CreateTripPage() {
 
     const email = data.get('email')?.toString();	
     if(!email) return;
+
+    if(!emailsToInvite){
+      setEmailsToInvite([email]);
+      return;
+    }
+
     if(emailsToInvite.includes(email)) return;
     
     setEmailsToInvite([...emailsToInvite, email]);
@@ -56,16 +68,9 @@ export function CreateTripPage() {
   }
 
   function removeEmailFromInvites(emailToRemove: string){
+    if(!emailsToInvite) return;
     const newEmailList = emailsToInvite.filter(email => email !== emailToRemove);
     setEmailsToInvite(newEmailList);
-  }
-
-  function openConfirmTripModal(){
-    setIsConfirmTripModalOpen(true);
-  }
-
-  function closeConfirmTripModal(){
-    setIsConfirmTripModalOpen(false);
   }
 
   async function createTrip(event: FormEvent<HTMLFormElement>){
@@ -76,7 +81,7 @@ export function CreateTripPage() {
       ||!ownerEmail 
       ||!eventStartAndEndDates?.from 
       ||!eventStartAndEndDates?.to
-      ||emailsToInvite.length === 0
+      ||emailsToInvite?.length === 0
     ){
       return;
     }
@@ -115,7 +120,7 @@ export function CreateTripPage() {
 
           { isGuestsInputOpen && (
             <InviteGuestsStep 
-              emailsToInvite={emailsToInvite}
+              emailsToInvite={emailsToInvite? emailsToInvite : []}
               openConfirmTripModal={openConfirmTripModal}
               openGuestsModal={openGuestsModal}
             />
@@ -130,7 +135,7 @@ export function CreateTripPage() {
 
         { isGuestsModalOpen && (
           <InviteGuestsModal 
-            emailsToInvite={emailsToInvite}
+            emailsToInvite={emailsToInvite? emailsToInvite : []}
             addNewEmailToInvite={addNewEmailToInvite}
             removeEmailFromInvites={removeEmailFromInvites}
             closeGuestsModal={closeGuestsModal}

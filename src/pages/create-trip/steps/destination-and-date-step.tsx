@@ -3,7 +3,7 @@ import { Button } from "../../../components/button";
 import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { format } from "date-fns";
+import { addDays, format, startOfToday } from "date-fns";
 import { Modal } from "../../../components/modal";
 
 interface DestinationAndDateStepProps {
@@ -28,6 +28,8 @@ export function DestinationAndDateStep({
   function toggleOpenDatePicker(){
     return setIsDatePickerOpen(!isDatePickerOpen);
   }
+
+  const tomorrow = addDays(startOfToday(), 1);
   const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
   ? format(eventStartAndEndDates.from, "'from' LLL do").concat(' to ').concat(format(eventStartAndEndDates.to, "LLL do"))
   : null;
@@ -70,6 +72,7 @@ export function DestinationAndDateStep({
               mode="range" 
               selected={eventStartAndEndDates} 
               onSelect={setEventStartAndEndDates}
+              disabled={{ before: tomorrow }} 
             />
           </Modal>
         )
