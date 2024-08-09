@@ -55,7 +55,7 @@ export function Activities(){
                         <span className="text-zinc-100">{activity.title}</span>
                         <span className="text-zinc-400 text-sm ml-auto">{format(activity.occurs_at, "h:mm aaa")}</span>
                         <button onClick={() => openDeleteActivityModal(activity.id)}>
-                          <X className="text-red-400 size-5"/>
+                          <X className="text-zinc-400 hover:text-red-400 size-5"/>
                         </button>
                       </div>
                     </div>
