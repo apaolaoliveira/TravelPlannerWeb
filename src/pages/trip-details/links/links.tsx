@@ -1,9 +1,10 @@
 import { Link2, Plus, X } from "lucide-react";
 import { Button } from "../../../components/button";
 import { useEffect, useState } from "react";
-import { CreateLinkModal } from "./create-link";
+import { CreateLinkModal } from "./create-link-modal";
 import { useParams } from "react-router-dom";
 import { api } from "../../../lib/axios";
+import { DeleteLinkModal } from "./delete-link-modal";
 
 interface Link {
   id: string;
@@ -21,6 +22,18 @@ export function Links(){
   }, [tripId]);
 
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
+  const [isDeleteLinkModalOpen, setIsDeleteLinkModalOpen] = useState(false);
+  const [ selectedLinkId, setSelectedLinkId ] = useState<string | null>(null);
+
+  function openDeleteLinkModal(linkId: string) {
+    setSelectedLinkId(linkId);
+    setIsDeleteLinkModalOpen(true);
+  }
+
+  function closeDeleteLinkModal() {
+    setIsDeleteLinkModalOpen(false);
+    setSelectedLinkId(null);
+  }
 
   function toggleIsCreateLinkModalOpen(){
     setIsCreateLinkModalOpen(!isCreateLinkModalOpen);
@@ -41,7 +54,7 @@ export function Links(){
                       <a href={link.url} target="_blank" className="block text-xs text-zinc-400 hover:text-zinc-200 truncate">{link.url}</a>
                     </div>
                   </div>
-                  <button>
+                  <button onClick={() => openDeleteLinkModal(link.id)}>
                     <X className="text-zinc-400 hover:text-red-400 size-5 shrink-0"/>
                   </button>
                 </div>
@@ -60,6 +73,10 @@ export function Links(){
 
       {isCreateLinkModalOpen && (
         <CreateLinkModal closeModal={toggleIsCreateLinkModalOpen}/>
+      )}
+
+      {isDeleteLinkModalOpen && (
+        <DeleteLinkModal linkId={selectedLinkId} closeModal={closeDeleteLinkModal}/>
       )}
     </section>
   )
